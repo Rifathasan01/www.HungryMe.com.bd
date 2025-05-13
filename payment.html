@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hungry Me - Payment</title>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="icon" href="Images/title bar icon.png" type="image/x-icon">
+    <style>
+        body {
+            font-family: 'Poppins';
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .header {
+            background-color: white;
+            color: #ff2a58;
+            padding: 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 75px;
+        }
+
+        .cart-summary,
+        .billing-form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+        }
+
+        h2 {
+            margin-bottom: 15px;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 10px;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+
+        .cart-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .item-details {
+            flex-grow: 1;
+        }
+
+        .item-details p {
+            margin: 3px 0;
+        }
+
+        .total {
+            text-align: right;
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 15px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input,
+        select {
+            width: 95%;
+            padding: 8px;
+            margin-top: 4px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .place-order-btn,
+        .print-btn {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            background-color: #ff2a58;
+            color: white;
+            border: none;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .place-order-btn:hover,
+        .print-btn:hover {
+            background-color: #c01b3f;
+        }
+
+        .receipt-section {
+            display: none;
+            background-color: white;
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 10px;
+        }
+
+        .receipt-section .comp-info {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .comp-info h1,
+        p {
+            padding: 0;
+            margin: 0;
+        }
+
+        .receipt-section h2 {
+            text-align: center;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+        }
+
+        .payment-instruction {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f9f9f9;
+            border-left: 4px solid #007bff;
+            display: none;
+        }
+
+        .success-message {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            color: #155724;
+            font-weight: bold;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+
+            .receipt-section,
+            .receipt-section * {
+                visibility: visible;
+            }
+
+            .receipt-section {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            .print-btn {
+                display: none;
+            }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-box {
+            background: #fff;
+            padding: 30px 20px;
+            border-radius: 15px;
+            max-width: 400px;
+            width: 80%;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            animation: slideUp 0.4s ease;
+            position: relative;
+        }
+
+        .modal-box h2 {
+            margin-bottom: 10px;
+            color: #ff2a58;
+        }
+
+        .modal-box p {
+            font-size: 16px;
+            color: #444;
+        }
+
+        .icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .home-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ff2a58;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .home-btn:hover {
+            background-color: #79172c;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            font-size: 22px;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: #000;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                background-color: rgba(0, 0, 0, 0);
+            }
+
+            to {
+                background-color: rgba(0, 0, 0, 0.6);
+            }
+        }
+
+        @media (max-width: 550px) {
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .container {
+                margin-top: 20px;
+            }
+
+            .cart-summary,
+            .billing-form {
+                min-width: 280px;
+                max-width: 350px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Bill Payment</h1>
+    </div>
+
+    <div class="container">
+        <div class="cart-summary">
+            <h2>Order Summary</h2>
+            <div id="selectedItemsList"></div>
+            <p class="total" id="totalAmount">Total: ৳0.00</p>
+        </div>
+
+        <div class="billing-form">
+            <h2>Billing Details</h2>
+            <form id="billingForm">
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" required>
+
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" required pattern="01[0-9]{9}" placeholder="e.g. 01XXXXXXXXX">
+
+                <label for="address">Shipping Address:</label>
+                <input type="text" id="address" required>
+
+                <label for="paymentMethod">Payment Method:</label>
+                <select id="paymentMethod" required onchange="showInstruction()">
+                    <option value="">Select Method</option>
+                    <option value="Cash on Delivery">Cash on Delivery</option>
+                    <option value="Credit/Debit Card">Credit/Debit Card</option>
+                    <option value="Bkash">Bkash</option>
+                    <option value="Nagad">Nagad</option>
+                </select>
+
+                <div id="paymentInstruction" class="payment-instruction"></div>
+
+                <button type="submit" class="place-order-btn" onclick="showConfirmationModal()">Place Order</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="confirmationModal" class="modal">
+        <div class="modal-box">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <div class="icon">🎉</div>
+            <h2>Order Confirmed!</h2>
+            <p>Your order has been placed successfully. Thank you for choosing us!</p>
+            <button onclick="goHome()" class="home-btn">Back to Home</button>
+        </div>
+    </div>
+
+    <div class="receipt-section" id="receiptSection">
+        <div class="comp-info">
+            <h1>HUNGRY ME</h1>
+            <p>Your Cravings Our Duty To Serve Food. Your Online Food Partner</p>
+        </div>
+        <h2>Order Payment Receipt</h2>
+        <p><strong>Name:</strong> <span id="rName"></span></p>
+        <p><strong>Phone:</strong> <span id="rPhone"></span></p>
+        <p><strong>Address:</strong> <span id="rAddress"></span></p>
+        <p><strong>Payment Method:</strong> <span id="rMethod"></span></p>
+        <h3>Items:</h3>
+        <ul id="receiptItems"></ul>
+        <p class="total"><strong>Total:</strong> ৳<span id="rTotal"></span></p>
+        <button class="print-btn" onclick="window.print()">Print Receipt</button>
+    </div>
+
+    <script>
+        const selectedItems = JSON.parse(localStorage.getItem("selectedCart")) || [];
+        const selectedItemsList = document.getElementById("selectedItemsList");
+        const totalAmount = document.getElementById("totalAmount");
+
+        function displaySelectedItems() {
+            selectedItemsList.innerHTML = "";
+            let total = 0;
+
+            selectedItems.forEach(item => {
+                const subtotal = item.price * item.quantity;
+                total += subtotal;
+
+                const div = document.createElement("div");
+                div.className = "cart-item";
+                div.innerHTML = `
+          <img src="${item.image}" alt="${item.name}">
+          <div class="item-details">
+            <p><strong>${item.name}</strong></p>
+            <p>Qty: ${item.quantity}</p>
+            <p>Subtotal: ৳${subtotal.toFixed(2)}</p>
+          </div>
+        `;
+                selectedItemsList.appendChild(div);
+            });
+
+            totalAmount.textContent = `Total: ৳${total.toFixed(2)}`;
+        }
+
+        function showInstruction() {
+            const method = document.getElementById("paymentMethod").value;
+            const instruction = document.getElementById("paymentInstruction");
+            instruction.style.display = "block";
+
+            switch (method) {
+                case "Credit/Debit Card":
+                    instruction.innerHTML = "Please enter your card details in the next step (simulated for now).";
+                    break;
+                case "Bkash":
+                    instruction.innerHTML = "Send payment to Bkash number <strong>01734187135</strong> and confirm.";
+                    break;
+                case "Nagad":
+                    instruction.innerHTML = "Send payment to Nagad number <strong>01734187135</strong> and confirm.";
+                    break;
+                case "Cash on Delivery":
+                    instruction.innerHTML = "You will pay the total amount in cash when the food is delivered.";
+                    break;
+                default:
+                    instruction.innerHTML = "";
+                    instruction.style.display = "none";
+            }
+        }
+
+        document.getElementById("billingForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById("name").value.trim();
+            const phone = document.getElementById("phone").value.trim();
+            const address = document.getElementById("address").value.trim();
+            const method = document.getElementById("paymentMethod").value;
+
+            if (!name || !phone || !address || !method) {
+                alert("Please fill out all fields and select a payment method.");
+                return;
+            }
+
+            document.getElementById("rName").textContent = name;
+            document.getElementById("rPhone").textContent = phone;
+            document.getElementById("rAddress").textContent = address;
+            document.getElementById("rMethod").textContent = method;
+
+            const receiptItems = document.getElementById("receiptItems");
+            receiptItems.innerHTML = "";
+            let total = 0;
+
+            selectedItems.forEach(item => {
+                const subtotal = item.price * item.quantity;
+                const li = document.createElement("li");
+                li.textContent = `${item.name} - Qty: ${item.quantity} - ৳${subtotal.toFixed(2)}`;
+                receiptItems.appendChild(li);
+                total += subtotal;
+            });
+
+            document.getElementById("rTotal").textContent = total.toFixed(2);
+            document.getElementById("receiptSection").style.display = "block";
+
+            localStorage.removeItem("selectedCart");
+        });
+
+        displaySelectedItems();
+
+        function showConfirmationModal() {
+            localStorage.removeItem("cart");
+            document.getElementById("confirmationModal").style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("confirmationModal").style.display = "none";
+        }
+
+        function goHome() {
+            window.location.href = "index.html";
+        }
+
+
+    </script>
+</body>
+
+</html>

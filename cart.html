@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hungry Me - My Cart</title>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="icon" href="Images/title bar icon.png" type="image/x-icon">
+
+    <style>
+        body {
+            font-family: 'Poppins';
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: white;
+            color: #ff2a58;
+            padding: 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+
+        .cart-container {
+            margin: 30px auto;
+            max-width: 900px;
+            width: 80%;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        .cart-container h2 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .cart-items {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f9f9f9;
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart-item img {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            object-fit: cover;
+        }
+
+        .cart-item .item-info {
+            flex: 1;
+            margin-left: 15px;
+        }
+
+        .cart-item .item-info h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .cart-item .item-info p {
+            margin: 5px 0 0;
+            color: #777;
+            font-size: 14px;
+        }
+
+        .cart-item .remove-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .cart-item .remove-btn:hover {
+            background: #c82333;
+        }
+
+        .empty-cart {
+            text-align: center;
+            color: #777;
+            font-size: 18px;
+            margin: 20px 0;
+        }
+
+        .cart-footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .cart-footer .clearCart {
+            background-color: #e6355b;
+            width: 85%;
+        }
+
+        .cart-footer button {
+            background: #007bff;
+            color: white;
+            border: none;
+            width: 41%;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        .cart-footer .clearCart:hover {
+            background-color: #a70024;
+            width: 85%;
+        }
+
+        .cart-footer button:hover {
+            background: #0056b3;
+        }
+
+        .qty-control {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .qty-control label {
+            margin-right: 10px;
+            font-weight: 500;
+        }
+
+        .qty-control input[type="number"] {
+            width: 60px;
+            padding: 5px;
+        }
+
+        @media (max-width: 550px) {
+            .header {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .cart-container {
+                width: 85%;
+            }
+
+            .cart-container h2 {
+                font-size: 25px;
+            }
+
+            .cart-footer button {
+                padding: 10px 5px;
+                margin: 10px 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>My Cart</h1>
+    </div>
+
+    <div class="cart-container">
+        <h2>Items in My Cart</h2>
+        <ul class="cart-items" id="cartItems"></ul>
+        <div class="cart-footer">
+            <button class="clearCart" onclick="clearCart()">Clear Cart</button>
+            <button onclick="goBack()">Shopping</button>
+            <button onclick="proceedToPayment()">Payment</button>
+        </div>
+    </div>
+
+<script>
+    const cartItemsContainer = document.getElementById("cartItems");
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    function renderCart() {
+        cartItemsContainer.innerHTML = "";
+
+        if (cart.length > 0) {
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                const li = document.createElement("li");
+                li.className = "cart-item";
+
+                const checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.checked = true;
+                checkbox.className = "item-select";
+                checkbox.dataset.index = index;
+
+                const img = document.createElement("img");
+                img.src = item.image || "Images/default_food.jpg";
+                img.alt = item.name;
+
+                const infoDiv = document.createElement("div");
+                infoDiv.className = "item-info";
+
+                const itemName = document.createElement("h3");
+                itemName.textContent = item.name;
+
+                // Quantity Control
+                const qtyDiv = document.createElement("div");
+                qtyDiv.className = "qty-control";
+
+                const qtyLabel = document.createElement("label");
+                qtyLabel.setAttribute("for", `qty-${index}`);
+                qtyLabel.textContent = "Quantity:";
+
+                const qtyInput = document.createElement("input");
+                qtyInput.type = "number";
+                qtyInput.id = `qty-${index}`;
+                qtyInput.min = 1;
+                qtyInput.value = item.quantity;
+
+                qtyInput.addEventListener("change", () => {
+                    const newQty = parseInt(qtyInput.value);
+                    if (newQty > 0) {
+                        cart[index].quantity = newQty;
+                        localStorage.setItem("cart", JSON.stringify(cart));
+                        renderCart();
+                    } else {
+                        alert("Quantity must be at least 1.");
+                        qtyInput.value = cart[index].quantity;
+                    }
+                });
+
+                qtyDiv.appendChild(qtyLabel);
+                qtyDiv.appendChild(qtyInput);
+
+                // Subtotal
+                const itemPrice = document.createElement("p");
+                const subtotal = item.quantity * item.price;
+                itemPrice.textContent = `Subtotal: ৳${subtotal.toFixed(2)}`;
+                itemPrice.classList.add("item-subtotal");
+                itemPrice.dataset.index = index;
+
+                total += subtotal;
+
+                const removeBtn = document.createElement("button");
+                removeBtn.className = "remove-btn";
+                removeBtn.textContent = "Remove";
+                removeBtn.addEventListener("click", () => removeItem(index));
+
+                infoDiv.appendChild(itemName);
+                infoDiv.appendChild(qtyDiv);
+                infoDiv.appendChild(itemPrice);
+
+                li.appendChild(checkbox);
+                li.appendChild(img);
+                li.appendChild(infoDiv);
+                li.appendChild(removeBtn);
+
+                cartItemsContainer.appendChild(li);
+            });
+
+            // Total
+            const totalDiv = document.createElement("div");
+            totalDiv.id = "cart-total";
+            totalDiv.style.textAlign = "right";
+            totalDiv.style.fontSize = "20px";
+            totalDiv.style.fontWeight = "bold";
+            totalDiv.style.marginTop = "20px";
+            totalDiv.textContent = `Total: ৳${calculateSelectedTotal().toFixed(2)}`;
+            cartItemsContainer.appendChild(totalDiv);
+
+            document.querySelectorAll('.item-select').forEach(cb => {
+                cb.addEventListener("change", () => {
+                    document.getElementById("cart-total").textContent = `Total: ৳${calculateSelectedTotal().toFixed(2)}`;
+                });
+            });
+
+        } else {
+            const emptyMessage = document.createElement("p");
+            emptyMessage.className = "empty-cart";
+            emptyMessage.textContent = "Your cart is empty.";
+            cartItemsContainer.appendChild(emptyMessage);
+        }
+    }
+
+    function calculateSelectedTotal() {
+        let total = 0;
+        document.querySelectorAll('.item-select').forEach(cb => {
+            if (cb.checked) {
+                const index = parseInt(cb.dataset.index);
+                total += cart[index].price * cart[index].quantity;
+            }
+        });
+        return total;
+    }
+
+    function getSelectedItems() {
+        let selected = [];
+        document.querySelectorAll('.item-select').forEach(cb => {
+            if (cb.checked) {
+                const index = parseInt(cb.dataset.index);
+                selected.push(cart[index]);
+            }
+        });
+        return selected;
+    }
+
+    function removeItem(index) {
+        cart.splice(index, 1);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        renderCart();
+    }
+
+    function clearCart() {
+        localStorage.removeItem("cart");
+        cart = [];
+        renderCart();
+    }
+
+    function goBack() {
+        window.location.href = "index.html#food-category-section";
+    }
+
+    function proceedToPayment() {
+        const selectedItems = getSelectedItems();
+
+        if (selectedItems.length === 0) {
+            alert("Please select at least one item to proceed.");
+            return;
+        }
+
+        localStorage.setItem("selectedCart", JSON.stringify(selectedItems));
+        window.location.href = "payment.html";
+    }
+
+    renderCart();
+</script>
+
+
+</body>
+
+</html>

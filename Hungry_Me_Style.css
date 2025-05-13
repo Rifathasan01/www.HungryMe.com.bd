@@ -1,0 +1,1398 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins';
+}
+
+/* Body Styling */
+body {
+    background: #fafafa;
+    color: #333;
+}
+
+/* Header Section Styling */
+header {
+    width: 100%;
+    height: 65px;
+    top: 0;
+    position: fixed;
+    z-index: 999999999999;
+    box-shadow: 5px 5px 15px lightgray;
+}
+
+nav {
+    width: 100%;
+    max-height: fit-content;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+nav>.regiicon>a {
+    font-size: 20px;
+    text-decoration: none;
+    color: black;
+    display: none;
+}
+
+nav>.carticon>a>.fa-solid {
+    font-size: 25px;
+    text-decoration: none;
+    color: rgb(255, 44, 44);
+}
+
+nav>.logo {
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+nav>.logo>a>img {
+    width: 140px;
+    height: auto;
+}
+
+nav>.menu {
+    width: 50%;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+nav>.menu>button {
+    font-size: 15px;
+    padding: 6px 15px;
+}
+
+.login {
+    margin: 0 10px;
+    border-radius: 10px;
+    color: rgb(0, 0, 0);
+    background-color: white;
+    border: 1px solid rgb(0, 0, 0);
+}
+
+.signup {
+    margin: 0 10px;
+    color: white;
+    border-radius: 10px;
+    background-color: rgb(255, 47, 113);
+    border: 1px solid rgb(255, 255, 255);
+}
+
+.language {
+    border: none;
+    margin: 0 30px 0 10px;
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+}
+
+.language>.fa-solid {
+    font-size: 17px;
+}
+
+nav>.menu>button:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.language-selector {
+    position: relative;
+    display: inline-block;
+}
+
+.language-btn {
+    background: #f0f0f0;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.3s;
+}
+
+.language-btn:hover {
+    background: #e0e0e0;
+}
+
+.language-dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    list-style: none;
+    margin-top: 5px;
+    overflow: hidden;
+    z-index: 1000;
+    width: 160px;
+}
+
+.language-dropdown li {
+    padding: 10px 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.language-dropdown li:hover {
+    background: #f2f2f2;
+}
+
+.language-dropdown img {
+    width: 20px;
+    height: 14px;
+    object-fit: cover;
+    border-radius: 2px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    margin-top: 35px;
+    background: rgba(0, 0, 0, 0.6);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: #fff;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 420px;
+    padding: 40px 30px;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    animation: popIn 0.3s ease;
+}
+
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+    color: #888;
+    cursor: pointer;
+}
+
+.form-box {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-box h2 {
+    font-size: 26px;
+    margin-bottom: 5px;
+    text-align: center;
+    color: #2c3e50;
+}
+
+.form-box p {
+    font-size: 14px;
+    text-align: center;
+    color: #777;
+}
+
+.input-group {
+    position: relative;
+}
+
+.input-group i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 12px 12px 38px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 15px;
+}
+
+.input-group input:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+.form-box .options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+}
+
+.form-box .options a {
+    color: #0072ff;
+    text-decoration: none;
+}
+
+.form-box .options a:hover {
+    text-decoration: underline;
+}
+
+.form-box .remember {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.form-box button {
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    background: linear-gradient(to right, #00c6ff, #0072ff);
+    color: white;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.form-box button:hover {
+    background: linear-gradient(to right, #0072ff, #005ce6);
+}
+
+.social-login {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.social-login button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #f1f1f1;
+    color: #444;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.social-login button:hover {
+    background: #e1e1e1;
+}
+
+.social-login .google i {
+    color: #db4437;
+}
+
+.social-login .facebook i {
+    color: #1877f2;
+}
+
+.popupmenu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999999;
+    border-radius: 30px;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 -20px 20px 20px lightgray;
+}
+
+.popupmenu>.cancel {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.cancel a .fa-regular {
+    font-size: 35px;
+    margin-top: 20px;
+    text-decoration: none;
+    color: rgb(255, 0, 0);
+    border-radius: 50%;
+    box-shadow: 5px 5px 15px lightgray;
+}
+
+.popupmenu>.mainfield {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.mainfield p {
+    margin: 10px 0;
+}
+
+.or {
+    width: 100%;
+    text-align: center;
+}
+
+.mainfield button {
+    width: 100%;
+    height: 40px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    border: 1px solid lightgray;
+}
+
+.mainfield button:hover {
+    cursor: pointer;
+}
+
+.mainfield button .fa-brands {
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+.Facebook {
+    color: white;
+    background-color: rgb(34, 152, 248);
+}
+
+.google {
+    color: black;
+    background-color: #fff;
+}
+
+.apple {
+    color: white;
+    background-color: black;
+}
+
+.login1 {
+    color: white;
+    background-color: rgb(255, 0, 119);
+}
+
+.signup1 {
+    color: black;
+    background-color: white;
+}
+
+.mainfield a {
+    text-decoration: none;
+    color: rgb(255, 0, 85);
+}
+
+
+
+
+
+.section1 {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row-reverse;
+    margin-top: 75px;
+    padding: 70px 0px;
+    background-color: rgb(240, 240, 240);
+}
+
+.section1>.lefthalf {
+    width: 60%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: right;
+}
+
+.lefthalf>.subsection {
+    width: 100%;
+    height: 300px;
+    margin-left: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: right;
+}
+
+.subsection>h1 {
+    width: 80%;
+    font-size: 40px;
+    margin-bottom: 50px;
+}
+
+.subsection>.inputsection {
+    width: 80%;
+    height: 80px;
+    padding: 0 20px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+}
+
+.inputsection>input {
+    width: 100%;
+    height: 50px;
+    padding-left: 10px;
+    border-radius: 5px;
+    border: 1px solid rgb(197, 195, 195);
+}
+
+.inputsection>button {
+    width: 120px;
+    height: 50px;
+    font-size: 16px;
+    margin-left: 20px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(255, 47, 113);
+}
+
+.inputsection>button:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.section1>.righthalf {
+    width: 40%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.section1>.righthalf>img {
+    max-width: 100%;
+}
+
+.food-category-section {
+    padding: 40px 20px;
+    background: #fde2e2;
+    text-align: center;
+}
+
+.section-heading {
+    font-size: 35px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.category-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.category-grid a {
+    text-decoration: none;
+}
+
+.category-item {
+    background: #ffffff;
+    border-radius: 16px;
+    width: 200px;
+    height: 200px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.category-item:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.category-item img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+    border-radius: 16px;
+}
+
+.category-item span {
+    font-size: 20px;
+    font-weight: 600;
+    color: #444;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 30px 0 10px;
+    color: #111;
+}
+
+.deals-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 0 20px;
+}
+
+.deals-wrapper {
+    width: 75%;
+    margin: auto;
+}
+
+#dealsScroll {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 20px 0;
+    scrollbar-width: none;
+}
+
+#dealsScroll::-webkit-scrollbar {
+    display: none;
+}
+
+.deal-card {
+    flex: 0 0 auto;
+    width: 230px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    padding: 10px;
+}
+
+.deal-card img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.deal-card h3 {
+    font-size: 16px;
+    margin: 10px 0 4px;
+}
+
+.rating {
+    color: #f39c12;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.details {
+    font-size: 13px;
+    color: #666;
+}
+
+.badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #ff0066;
+    color: #fff;
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.scroll-btn {
+    background: white;
+    border: 1px solid #ccc;
+    font-size: 18px;
+    padding: 6px 12px;
+    cursor: pointer;
+    z-index: 2;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.scroll-btn:hover {
+    background: #eee;
+}
+
+.scroll-btn.left {
+    position: absolute;
+    left: 0;
+}
+
+.scroll-btn.right {
+    position: absolute;
+    right: 0;
+}
+
+
+
+
+
+
+.section2 {
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+
+.section2>.textsection {
+    width: 100%;
+    text-align: center;
+    padding: 100px 0 50px 0;
+    background-color: white;
+    border-bottom: 1px solid black;
+}
+
+.textsection>h1 {
+    font-size: 35px;
+}
+
+.section2>.offersection {
+    width: 100%;
+    min-height: 400px;
+    background-image: url("Images/home-vendor-bd.webp");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+
+}
+
+.section2>.textpart {
+    width: 100%;
+    min-height: 250px;
+    max-height: fit-content;
+    background-color: rgb(255, 255, 255);
+}
+
+.section2>.textpart>.floatsection {
+    max-width: 700px;
+    height: auto;
+    position: absolute;
+    bottom: 50px;
+    left: 15%;
+    margin-right: 20px;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+    background-color: white;
+}
+
+.floatsection>h1 {
+    font-size: 30px;
+    margin: 25px 20px;
+}
+
+.floatsection>p {
+    font-size: 16px;
+    margin: 25px 20px;
+}
+
+.floatsection>button {
+    font-size: 16px;
+    padding: 5px 10px;
+    margin: 0 20px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: rgb(255, 47, 113);
+}
+
+.floatsection>button:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.section3 {
+    width: 100%;
+    height: auto;
+    margin: 50px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.section3>.textpart {
+    width: 70%;
+}
+
+.textpart>h1 {
+    font-size: 35px;
+    margin: 20px 10px;
+}
+
+.section3>.areas {
+    width: 70%;
+    gap: 20px;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.areas>.city:hover .figure>img {
+    transform: scale(1.05);
+}
+
+.figure>img {
+    width: 100%;
+    height: 280px;
+    border-radius: 20px;
+}
+
+.city>a>.figure {
+    position: relative;
+}
+
+.figure>.caption {
+    left: 10px;
+    bottom: 15px;
+    position: absolute;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: aliceblue;
+}
+
+
+.section4 {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.section4>.innersection {
+    width: 70%;
+    height: auto;
+}
+
+.section4>.innersection>.textsection>h1 {
+    margin: 30px 0;
+}
+
+.section4>.innersection>.infosection {
+    width: 100%;
+    height: auto;
+    padding: 30px 0;
+    border-radius: 20px;
+    background-color: rgb(255, 0, 106);
+    position: relative;
+}
+
+.section4>.innersection>.infosection>.subsection,
+.section4>.innersection>.infosection>.mobile {
+    width: 50%;
+    height: auto;
+    color: white;
+}
+
+.infosection>.subsection>.qrcode {
+    width: 100%;
+    margin-left: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.infosection>.subsection>.qrcode>p {
+    margin-left: 20px;
+}
+
+.section4>.innersection>.infosection>.mobile {
+    position: absolute;
+    right: 0;
+    bottom: -80px;
+}
+
+.section4>.innersection>.infosection>.mobile>img {
+    max-width: 100%;
+}
+
+.infosection>.subsection>h2 {
+    padding: 30px 50px;
+}
+
+.infosection>.subsection>p {
+    display: inline-block;
+    width: 400px;
+    margin-left: 20px;
+}
+
+.infosection>.subsection>.linksection {
+    display: flex;
+    align-items: center;
+    margin-left: 40px;
+}
+
+.infosection>.subsection>.linksection>a>.apple {
+    width: 170px;
+    height: 70px;
+    background-color: transparent;
+}
+
+.infosection>.subsection>.linksection>a>.google,
+.infosection>.subsection>.linksection>a>.huawei {
+    width: 150px;
+    height: 45px;
+    margin-right: 10px;
+    background-color: transparent;
+}
+
+.section5 {
+    width: 100%;
+    height: auto;
+    padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.section5>.headingpart {
+    width: 70%;
+    font-size: 25px;
+    padding: 30px 0;
+}
+
+.section5>.mainpart {
+    width: 100%;
+    height: 500px;
+    background-image: url("Images/home-corporate-bd.webp");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.section5>.floatpart {
+    width: 100%;
+    height: 250px;
+}
+
+.section5>.floatpart>.floatmsg {
+    max-width: 600px;
+    height: auto;
+    left: 150px;
+    bottom: 100px;
+    margin-right: 5%;
+    position: absolute;
+    border: none;
+    border-radius: 20px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+}
+
+.floatmsg>h2,
+.floatmsg>p,
+.floatmsg>button {
+    margin: 20px;
+}
+
+.floatmsg>button {
+    font-size: 16px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: rgb(255, 47, 113);
+}
+
+.floatmsg>button:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.section6 {
+    width: 100%;
+    height: auto;
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.section6>.innersection {
+    width: 80%;
+    height: auto;
+}
+
+.section6>.innersection>h2 {
+    margin: 20px 0;
+}
+
+footer {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+footer>.mainpart {
+    width: 80%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.mainpart>.upperpart {
+    width: 100%;
+    padding: 30px 0;
+    flex-grow: 2;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+    margin-bottom: 50px;
+    border-top: 1px solid rgb(190, 190, 190);
+    border-bottom: 1px solid rgb(190, 190, 190);
+}
+
+footer>.mainpart>.upperpart ul {
+    width: 300px;
+    list-style-type: none;
+}
+
+footer>.mainpart ul li {
+    text-align: center;
+    padding: 5px 0;
+}
+
+footer>.mainpart ul li a {
+    color: black;
+}
+
+footer>.mainpart ul li>a:hover {
+    color: red;
+}
+
+.mainpart>.lowerpart {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.socialicon>a>.fa-brands {
+    font-size: 25px;
+    padding: 10px;
+    border-radius: 50%;
+    color: white;
+    background-color: rgb(255, 0, 135);
+    margin-right: 30px;
+    margin-bottom: 20px;
+}
+
+.socialicon>a>.fa-brands:hover {
+    transform: scale(1.05);
+}
+
+.mainpart>.lowerpart>.copyright {
+    text-align: center;
+}
+
+.mainpart>.lowerpart>.copyright>p>.fa-solid {
+    font-size: 18px;
+}
+
+@media (max-width: 1024px) {
+    .section1 {
+        padding: 0;
+    }
+
+    .section1>.lefthalf {
+        width: 80%;
+    }
+
+    .lefthalf>.subsection {
+        height: auto;
+        margin-left: 0;
+    }
+
+    .subsection>h1 {
+        font-size: 35px;
+    }
+
+    .subsection>.inputsection {
+        height: auto;
+        padding: 10px;
+    }
+
+    .inputsection>input {
+        height: 40px;
+    }
+
+    .inputsection>button {
+        height: 40px;
+    }
+
+    .section2>.textsection>h1 {
+        text-align: left;
+        font-size: 30px;
+    }
+
+    .section2>.textpart>.floatsection {
+        left: 5%;
+    }
+
+    .section2>.textpart>.floatsection>h1 {
+        font-size: 18px;
+        margin: 10px 20px;
+    }
+
+    .section2>.textpart>.floatsection>p {
+        font-size: 15px;
+        margin: 10px 20px;
+    }
+
+    .textsection {
+        padding: 0;
+    }
+
+    .textsection>h1 {
+        font-size: 20px;
+        margin: 0 5%;
+    }
+
+    .section3>.textpart {
+        width: 90%;
+        text-align: left;
+    }
+
+    .section3>.textpart>h1 {
+        font-size: 30px;
+    }
+
+    .section3 .areas,
+    .section4>.innersection {
+        width: 90%;
+    }
+
+    .section4>.innersection>.infosection {
+        padding: 0;
+        display: flex;
+    }
+
+    .innersection>.textsection>h1 {
+        font-size: 30px;
+    }
+
+    .innersection>.infosection>.subsection>h2 {
+        text-align: center;
+    }
+
+    .innersection>.infosection>.subsection>.qrcode {
+        width: 100%;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .innersection>.infosection>.subsection>.qrcode>p {
+        width: 90%;
+        margin-right: 20px;
+        text-align: center;
+    }
+
+    .innersection>.infosection>.subsection>.linksection {
+        margin: 0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .infosection>.subsection>.linksection>a>.apple {
+        width: 130px;
+        height: 60px;
+    }
+
+    .infosection>.subsection>.linksection>a>.google,
+    .infosection>.subsection>.linksection>a>.huawei {
+        width: 130px;
+        height: 40px;
+    }
+
+    .section4>.innersection>.infosection>.mobile {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: static;
+    }
+
+    .section4>.innersection>.infosection>.mobile>img {
+        height: 450px;
+    }
+
+    .section5>.headingpart {
+        width: 90%;
+        font-size: 20px;
+    }
+
+    .section5>.floatpart>.floatmsg {
+        left: 5%;
+    }
+
+    .section6>.innersection {
+        width: 90%;
+        text-align: center;
+    }
+
+    footer>.mainpart {
+        width: 95%;
+    }
+
+    footer>.mainpart>.upperpart,
+    footer>.mainpart>.lowerpart {
+        width: 100%;
+    }
+
+    footer>.mainpart>.lowerpart>.copyright {
+        text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+    nav>.regiicon>a {
+        display: block;
+    }
+
+    nav>.logo {
+        margin-left: 0;
+    }
+
+    nav>.menu {
+        display: none;
+    }
+
+    .section1 {
+        padding: 30px;
+    }
+
+    .subsection>h1,
+    .section3>.textpart>h1,
+    .innersection>.textsection>h1 {
+        font-size: 25px;
+    }
+
+    .section3>.areas {
+        display: grid;
+        gap: 20px;
+        justify-content: center;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    }
+
+    .figure>img {
+        width: 100%;
+        height: 160px;
+        border-radius: 20px;
+    }
+
+    .innersection>.infosection>.subsection>.linksection {
+        flex-direction: row;
+    }
+
+    .infosection>.subsection>.linksection>a>.apple {
+        width: 100px;
+        height: 50px;
+    }
+
+    .infosection>.subsection>.linksection>a>.google,
+    .infosection>.subsection>.linksection>a>.huawei {
+        width: 100px;
+        height: 35px;
+    }
+
+    .section4>.innersection>.infosection>.mobile>img {
+        height: 400px;
+    }
+
+    .section5>.headingpart {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal {
+        margin-top: 35px;
+    }
+
+    .section-title {
+        font-size: 25px;
+    }
+
+    .deals-wrapper {
+        width: 100%;
+        margin: auto;
+    }
+
+    .scroll-btn:hover {
+        background: white;
+    }
+
+    .inputsection>button {
+        width: 100%;
+    }
+
+    .popupmenu {
+        width: 100%;
+        left: 0;
+        bottom: 0;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .section-heading {
+        font-size: 25px;
+    }
+
+    .category-grid {
+        gap: 15px;
+    }
+
+    .category-item {
+        width: 170px;
+        height: 170px;
+    }
+
+    .subsection>.inputsection {
+        align-items: center;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .subsection>.inputsection>input,
+    .subsection>.inputsection>button {
+        text-align: center;
+        margin: 10px 0;
+        height: 40px;
+    }
+
+    .section1 {
+        display: block;
+        padding-top: 0;
+    }
+
+    .section1>.lefthalf,
+    .section1>.righthalf {
+        width: 100%;
+    }
+
+    .subsection>h1 {
+        width: 100%;
+        font-size: 25px;
+        text-align: center;
+    }
+
+    .section2>.textsection {
+        padding: 30px 0;
+    }
+
+    .section2>.textsection>h1 {
+        font-size: 25px;
+    }
+
+    .section2>.textpart>.floatsection>h1 {
+        font-size: 16px;
+        margin: 10px 20px;
+    }
+
+    .section2>.textpart>.floatsection>p {
+        font-size: 14px;
+        margin: 10px 20px;
+    }
+
+    .section4>.innersection {
+        width: 90%;
+    }
+
+    .section4>.innersection>.textsection>h1 {
+        font-size: 25px;
+    }
+
+    .section4>.innersection>.infosection {
+        flex-direction: column-reverse;
+    }
+
+    .section4>.innersection>.infosection>.subsection,
+    .section4>.innersection>.infosection>.mobile {
+        width: 100%;
+    }
+
+    .innersection>.infosection>.subsection>h2 {
+        text-align: center;
+        padding: 0;
+    }
+
+    .section4>.innersection>.infosection>.mobile>img {
+        height: auto;
+    }
+
+    .innersection>.infosection>.subsection>.linksection {
+        flex-direction: row;
+    }
+
+    .section4>.innersection>.infosection {
+        padding: 0px;
+    }
+
+    .section5>.floatpart>.floatmsg>h2 {
+        font-size: 16px;
+        margin: 10px 20px;
+    }
+
+    .section5>.floatpart>.floatmsg>p {
+        font-size: 14px;
+        margin: 10px 20px;
+    }
+
+}

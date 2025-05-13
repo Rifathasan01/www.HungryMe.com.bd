@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hungry Me - Food Category</title>
+    <link rel="icon" href="Images/title bar icon.png" type="image/x-icon">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins';
+        }
+
+        /* Body Styling */
+        body {
+            background: #fafafa;
+            color: #333;
+        }
+
+        /* Header Section Styling */
+        header {
+            width: 100%;
+            height: 65px;
+            top: 0;
+            position: fixed;
+            z-index: 999999999999;
+            box-shadow: 5px 5px 15px lightgray;
+        }
+
+        nav {
+            width: 100%;
+            max-height: fit-content;
+            background-color: rgb(255, 255, 255);
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        nav>.regiicon>a {
+            font-size: 20px;
+            text-decoration: none;
+            color: black;
+            display: none;
+        }
+
+        nav>.carticon>a>.fa-solid {
+            font-size: 25px;
+            text-decoration: none;
+            color: rgb(255, 44, 44);
+        }
+
+        nav>.logo {
+            height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: right;
+        }
+
+        nav>.logo>a>img {
+            width: 140px;
+            height: auto;
+        }
+
+        nav>.menu {
+            width: 50%;
+            height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: right;
+        }
+
+        nav>.menu>button {
+            font-size: 15px;
+            padding: 6px 15px;
+        }
+
+        .login {
+            margin: 0 10px;
+            border-radius: 10px;
+            color: rgb(0, 0, 0);
+            background-color: white;
+            border: 1px solid rgb(0, 0, 0);
+        }
+
+        .signup {
+            margin: 0 10px;
+            color: white;
+            border-radius: 10px;
+            background-color: rgb(255, 47, 113);
+            border: 1px solid rgb(255, 255, 255);
+        }
+
+        .language {
+            border: none;
+            margin: 0 30px 0 10px;
+            color: rgb(0, 0, 0);
+            background-color: rgb(255, 255, 255);
+        }
+
+        .language>.fa-solid {
+            font-size: 17px;
+        }
+
+        nav>.menu>button:hover {
+            transform: scale(1.1);
+            cursor: pointer;
+        }
+
+        .language-selector {
+            position: relative;
+            display: inline-block;
+        }
+
+        .language-btn {
+            background: #f0f0f0;
+            border: none;
+            padding: 10px 15px;
+            font-size: 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.3s;
+        }
+
+        .language-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .language-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            list-style: none;
+            margin-top: 5px;
+            overflow: hidden;
+            z-index: 1000;
+            width: 160px;
+        }
+
+        .language-dropdown li {
+            padding: 10px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .language-dropdown li:hover {
+            background: #f2f2f2;
+        }
+
+        .language-dropdown img {
+            width: 20px;
+            height: 14px;
+            object-fit: cover;
+            border-radius: 2px;
+        }
+
+
+
+
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            margin-top: 35px;
+            background: rgba(0, 0, 0, 0.6);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: #fff;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 420px;
+            padding: 40px 30px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            animation: popIn 0.3s ease;
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            color: #888;
+            cursor: pointer;
+        }
+
+        .form-box {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-box h2 {
+            font-size: 26px;
+            margin-bottom: 5px;
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        .form-box p {
+            font-size: 14px;
+            text-align: center;
+            color: #777;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaa;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 12px 12px 38px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 15px;
+        }
+
+        .input-group input:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        .form-box .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+        }
+
+        .form-box .options a {
+            color: #0072ff;
+            text-decoration: none;
+        }
+
+        .form-box .options a:hover {
+            text-decoration: underline;
+        }
+
+        .form-box .remember {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .form-box button {
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            color: white;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .form-box button:hover {
+            background: linear-gradient(to right, #0072ff, #005ce6);
+        }
+
+        .social-login {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .social-login button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: #f1f1f1;
+            color: #444;
+            border: none;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .social-login button:hover {
+            background: #e1e1e1;
+        }
+
+        .social-login .google i {
+            color: #db4437;
+        }
+
+        .social-login .facebook i {
+            color: #1877f2;
+        }
+
+        .popupmenu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999999;
+            border-radius: 30px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 -20px 20px 20px lightgray;
+        }
+
+        .popupmenu>.cancel {
+            width: 90%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .cancel a .fa-regular {
+            font-size: 35px;
+            margin-top: 20px;
+            text-decoration: none;
+            color: rgb(255, 0, 0);
+            border-radius: 50%;
+            box-shadow: 5px 5px 15px lightgray;
+        }
+
+        .popupmenu>.mainfield {
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .mainfield p {
+            margin: 10px 0;
+        }
+
+        .or {
+            width: 100%;
+            text-align: center;
+        }
+
+        .mainfield button {
+            width: 100%;
+            height: 40px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            border: 1px solid lightgray;
+        }
+
+        .mainfield button:hover {
+            cursor: pointer;
+        }
+
+        .mainfield button .fa-brands {
+            font-size: 18px;
+            margin-right: 10px;
+        }
+
+        .Facebook {
+            color: white;
+            background-color: rgb(34, 152, 248);
+        }
+
+        .google {
+            color: black;
+            background-color: #fff;
+        }
+
+        .apple {
+            color: white;
+            background-color: black;
+        }
+
+        .login1 {
+            color: white;
+            background-color: rgb(255, 0, 119);
+        }
+
+        .signup1 {
+            color: black;
+            background-color: white;
+        }
+
+        .mainfield a {
+            text-decoration: none;
+            color: rgb(255, 0, 85);
+        }
+
+
+
+        .section66 {
+            width: 100%;
+            height: auto;
+            margin-bottom: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .innersection1 {
+            width: 80%;
+            height: auto;
+        }
+
+        .innersection1 h2 {
+            margin: 20px 0;
+        }
+
+        footer {
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        footer>.mainpart {
+            width: 80%;
+            height: auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .mainpart>.upperpart {
+            width: 100%;
+            padding: 30px 0;
+            flex-grow: 2;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-around;
+            margin-bottom: 50px;
+            border-top: 1px solid rgb(190, 190, 190);
+            border-bottom: 1px solid rgb(190, 190, 190);
+        }
+
+        footer>.mainpart>.upperpart ul {
+            width: 300px;
+            list-style-type: none;
+        }
+
+        footer>.mainpart ul li {
+            text-align: center;
+            padding: 5px 0;
+        }
+
+        footer>.mainpart ul li a {
+            color: black;
+        }
+
+        footer>.mainpart ul li>a:hover {
+            color: red;
+        }
+
+        .mainpart>.lowerpart {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 50px;
+        }
+
+        .socialicon>a>.fa-brands {
+            font-size: 25px;
+            padding: 10px;
+            border-radius: 50%;
+            color: white;
+            background-color: rgb(255, 0, 135);
+            margin-right: 30px;
+            margin-bottom: 20px;
+        }
+
+        .socialicon>a>.fa-brands:hover {
+            transform: scale(1.05);
+        }
+
+        .mainpart>.lowerpart>.copyright {
+            text-align: center;
+        }
+
+        .mainpart>.lowerpart>.copyright>p>.fa-solid {
+            font-size: 18px;
+        }
+
+
+
+        /* Main Container Styling */
+        .container {
+            max-width: 1200px;
+            margin: 100px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Category Title */
+        .container h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            color: #ff7043;
+            margin-bottom: 30px;
+        }
+
+        /* Food Item Grid Layout */
+        .food-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            padding: 0 15px;
+        }
+
+        /* Individual Food Item Card */
+        .food-item {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+            text-align: center;
+            padding: 20px;
+            cursor: pointer;
+        }
+
+        .food-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .food-item img {
+            width: 100%;
+            height: 200px;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .food-item img:hover {
+            transform: scale(1.05);
+        }
+
+        .food-item h4 {
+            font-size: 1.6rem;
+            margin-top: 20px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .food-item .info {
+            font-size: 1rem;
+            color: #666;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+
+        .food-item .price {
+            font-size: 1.3rem;
+            color: #e67e22;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .food-item .location {
+            font-size: 1.1rem;
+            color: #007bff;
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        /* Back Link Styling */
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 40px;
+            text-decoration: none;
+            color: #007bff;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .quantity-add {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .quantity-add input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            font-size: 1rem;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .add-to-cart {
+            background-color: #ff7043;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            font-size: 0.95rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            background-color: #e65c2e;
+        }
+
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            nav>.regiicon>a {
+                display: block;
+            }
+
+            nav>.logo {
+                margin-left: 0;
+            }
+
+            nav>.menu {
+                display: none;
+            }
+
+            .modal {
+                margin-top: 35px;
+            }
+
+            .popupmenu {
+                width: 100%;
+                left: 0;
+                bottom: 0;
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+
+            .container {
+                padding: 10px;
+            }
+
+            .food-items {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .section66>.innersection1 {
+                width: 90%;
+                text-align: center;
+            }
+
+            .section66>.innersection1>h2 {
+                font-size: 18px;
+            }
+
+            .section66>.innersection1>p {
+                font-size: 15px;
+            }
+
+            footer>.mainpart {
+                width: 100%;
+            }
+
+            .mainpart>.upperpart,
+            .mainpart>.lowerpart {
+                width: 100%;
+            }
+
+            .mainpart>.upperpart ul {
+                padding: 0;
+            }
+
+            .mainpart>.lowerpart>.copyright {
+                text-align: center;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h2 {
+                font-size: 1.6rem;
+            }
+
+            .food-items {
+                grid-template-columns: 1fr;
+            }
+
+            .food-item h4 {
+                font-size: 1.3rem;
+            }
+
+            .modal {
+                margin-top: 35px;
+            }
+
+            .popupmenu {
+                width: 100%;
+                left: 0;
+                bottom: 0;
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <div class="regiicon">
+                <a href="#" onclick="showMenu()"><i class="fa-solid fa-user-plus"></i></a>
+            </div>
+            <div class="logo">
+                <a href="#"><img src="Images/navbar_logo.png" alt="Logo"></a>
+            </div>
+            <div class="menu">
+                <button type="button" class="login" onclick="openModal('login')">Log In</button>
+                <button type="button" class="signup" onclick="openModal('signup')">Sign Up</button>
+                <div class="language-selector">
+                    <button onclick="toggleLanguageDropdown()" class="language-btn" id="selected-language">
+                        <i class="fa-solid fa-globe"></i> Language
+                        <i class="fa-solid fa-caret-down"></i>
+                    </button>
+                    <ul id="language-dropdown" class="language-dropdown">
+                        <li onclick="setLanguage('en', 'English')"><img src="https://flagcdn.com/us.svg" alt="EN">
+                            English</li>
+                        <li onclick="setLanguage('bn', 'বাংলা')"><img src="https://flagcdn.com/bd.svg" alt="BN"> বাংলা
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="carticon">
+                <a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a>
+            </div>
+        </nav>
+    </header>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="form-container">
+                <!-- Dynamic forms will load here -->
+            </div>
+        </div>
+    </div>
+
+
+    <div class="popupmenu" id="popupMenu">
+        <div class="cancel">
+            <a href="#" onclick="hideMenu()"><i class="fa-regular fa-circle-xmark"></i></a>
+        </div>
+        <div class="mainfield">
+            <h1 id="popupTitle">Welcome!</h1>
+            <p>Sign up or log in to continue</p>
+            <button type="submit" class="facebook"><i class="fa-brands fa-facebook"></i> Continue with Facebook</button>
+            <button type="submit" class="google"><i class="fa-brands fa-google"></i> Continue with Google</button>
+            <button type="submit" class="apple"><i class="fa-brands fa-apple"></i> Continue with Apple</button>
+            <p class="or">or</p>
+            <button type="submit" class="login1" id="popupLogin" onclick="hideMenu(),openModal('login')">Log in</button>
+            <button type="submit" class="signup1" id="popupSignup" onclick="hideMenu(),openModal('signup')">Sign
+                up</button>
+            <p>By signing up, you agree to our <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a>.
+            </p>
+        </div>
+    </div>
+
+
+
+
+    <div class="container">
+        <h2 id="category-title"></h2>
+        <div id="food-list" class="food-items"></div>
+        <a href="index.html#food-category-section" class="back-link">Back to Categories</a>
+    </div>
+
+
+    <div class="section66">
+        <div class="innersection1">
+            <h2>Order food from the best restaurants and shops with HUNGRY ME Bangladesh
+            </h2>
+            <p>Are you hungry? Did you have a long and stressful day? Interested in getting a cheesy pizza delivered to
+                your office or looking to avoid the weekly shop? Then HUNGRY ME Bangladesh is the right destination for
+                you! HUNGRY ME offers you a long and detailed list of the best restaurants and shops near you to help
+                make your everyday easier. Our online food delivery service has it all, whether you fancy a juicy burger
+                from Takeout, fresh sushi from Samdado or peri peri chicken from Nando's, HUNGRY ME Bangladesh has over
+                2000 restaurants available from Dhaka to Chittagong through to Sylhet. Did you know you can order your
+                groceries and more from HUNGRY ME, too? Check out HUNGRY ME shops for favourite partners like Unimart,
+                Suborno, Shwapno, Bengal Meat, and much more. Sit back and relax – let HUNGRY ME Bangladesh take the
+                pressure off your shoulders.</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="mainpart">
+            <div class="upperpart">
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Refund Account Terms and Conditions</a></li>
+                    <li><a href="#">Dine-in</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Hungrygo for customers</a></li>
+                    <li><a href="#">Become an Affiliate</a></li>
+                    <li><a href="#">Cashback Program
+                        </a></li>
+                </ul>
+                <ul>
+                    <li><a href="#">Terms and Conditions</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Partner with Us</a></li>
+                    <li><a href="#">Hungry Me for Business</a></li>
+                    <li><a href="#">Hungry Me Deals</a></li>
+                    <li><a href="#">Hungry Me pro Subscription</a></li>
+                    <li><a href="#">Download Hungry Me Apps</a></li>
+                </ul>
+                <ul>
+                    <li><a href="">pandago for business</a></li>
+                    <li><a href="">Grocery delivery</a></li>
+                    <li><a href="">Ramadan delivery</a></li>
+                    <li><a href="">All cities</a></li>
+                    <li><a href="">Areas delivered in Dhaka</a></li>
+                    <li><a href="">Areas delivered in Gazipur</a></li>
+                    <li><a href="">Areas delivered in Narayanganj</a></li>
+                </ul>
+                <ul>
+                    <li><a href="">Areas delivered in Sylhet</a></li>
+                    <li><a href="">Areas delivered in Barisal</a></li>
+                    <li><a href="">Areas delivered in Khulna</a></li>
+                    <li><a href="">Areas delivered in Rajshahi</a></li>
+                    <li><a href="">Areas delivered in Comilla</a></li>
+                    <li><a href="">Areas delivered in Mymensingh</a></li>
+                    <li><a href="">Areas delivered in Rangpur</a></li>
+                </ul>
+            </div>
+            <div class="lowerpart">
+                <div class="socialicon">
+                    <a href=""><i class="fa-brands fa-facebook"></i></a>
+                    <a href="https://www.youtube.com/"><i class="fa-brands fa-youtube"></i></a>
+                    <a href=""><i class="fa-brands fa-instagram"></i></a>
+                </div>
+                <div class="copyright">
+                    <p>Copyright <i class="fa-solid fa-copyright"></i> 1969 - 2024.</p>
+                    <p>All right reserved <i class="fa-solid fa-at"></i> OniChan Programmer.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get('type');
+
+        const foodData = {
+            Pizza: [
+                {
+                    name: "Margherita",
+                    price: "12.99",
+                    image: "Images/pizza-margherita.jpeg",
+                    location: "New York, USA",
+                    description: "Classic pizza with fresh mozzarella and basil.",
+                },
+                {
+                    name: "Pepperoni",
+                    price: "14.99",
+                    image: "Images/pizza-pepperoni.jpeg",
+                    location: "Los Angeles, USA",
+                    description: "A favorite topped with spicy pepperoni.",
+                },
+                {
+                    name: "Margherita",
+                    price: "12.99",
+                    image: "Images/pizza-margherita.jpeg",
+                    location: "New York, USA",
+                    description: "Classic pizza with fresh mozzarella and basil.",
+                },
+                {
+                    name: "Pepperoni",
+                    price: "14.99",
+                    image: "Images/pizza-pepperoni.jpeg",
+                    location: "Los Angeles, USA",
+                    description: "A favorite topped with spicy pepperoni.",
+                },
+            ],
+            Burger: [
+                {
+                    name: "Beef Burger",
+                    price: "9.99",
+                    image: "Images/beef-burger.jpeg",
+                    location: "Chicago, USA",
+                    description: "Juicy beef patty with fresh lettuce and tomato.",
+                },
+                {
+                    name: "Chicken Burger",
+                    price: "10.99",
+                    image: "Images/chicken-burger.jpeg",
+                    location: "San Francisco, USA",
+                    description: "Grilled chicken patty with creamy mayo.",
+                },
+            ],
+        };
+
+
+        document.getElementById("category-title").innerText = category + " Items";
+
+        const foodList = document.getElementById("food-list");
+        const items = foodData[category] || [];
+
+        if (items.length === 0) {
+            foodList.innerHTML = "<p>No items found in this category.</p>";
+        } else {
+            items.forEach(item => {
+                const div = document.createElement("div");
+                div.className = "food-item";
+                div.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}">
+                    <h4>${item.name}</h4>
+                    <p class="info">
+                        <span></span> ${item.description}
+                    </p>
+                    <p class="location">
+                        <span>Available in:</span> ${item.location}
+                    </p>
+                    <p class="price">Price: ৳${item.price}</p>
+                    <div class="quantity-add">
+                        <label for="qty-${item.name}">Qty:</label>
+                        <input type="number" id="qty-${item.name}" name="quantity" min="1" value="1">
+                        <button class="add-to-cart" onclick="addToCart('${item.name}', ${item.price.replace('$', '')}, '${item.image}')">
+                            <i class="fa fa-cart-plus"></i> Add to Cart
+                        </button>
+                    </div>
+                `;
+                foodList.appendChild(div);
+            });
+
+        }
+
+        function addToCart(itemName, itemPrice, itemImage) {
+            const quantityInput = document.getElementById(`qty-${itemName}`);
+            const quantity = parseInt(quantityInput.value);
+
+            if (quantity <= 0 || isNaN(quantity)) {
+                alert("Please enter a valid quantity.");
+                return;
+            }
+
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+            const existingItem = cart.find(item => item.name === itemName);
+
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({
+                    name: itemName,
+                    quantity: quantity,
+                    price: itemPrice,
+                    image: itemImage
+                });
+            }
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+            alert(`${quantity} x ${itemName} added to your cart!`);
+        }
+
+
+        function toggleLanguageDropdown() {
+            const dropdown = document.getElementById("language-dropdown");
+            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+        }
+
+        function setLanguage(code, name) {
+            const button = document.getElementById("selected-language");
+            button.innerHTML = `<i class="fa-solid fa-globe"></i> ${name} <i class="fa-solid fa-caret-down"></i>`;
+            document.getElementById("language-dropdown").style.display = "none";
+        }
+
+        window.addEventListener('click', function (e) {
+            const button = document.querySelector('.language-btn');
+            const dropdown = document.getElementById("language-dropdown");
+            if (!button.contains(e.target)) {
+                dropdown.style.display = "none";
+            }
+        });
+
+
+        function openModal(type) {
+            const modal = document.getElementById("modal");
+            const formContainer = document.getElementById("form-container");
+
+            if (type === "login") {
+                formContainer.innerHTML = `
+      <form class="form-box">
+        <h2><i class="fa-solid fa-right-to-bracket"></i> Login</h2>
+        <p>Welcome back! Please login to continue.</p>
+        
+        <div class="input-group">
+          <i class="fa-solid fa-envelope"></i>
+          <input type="email" placeholder="Email" required />
+        </div>
+        <div class="input-group">
+          <i class="fa-solid fa-lock"></i>
+          <input type="password" placeholder="Password" required />
+        </div>
+        
+        <div class="options">
+          <label class="remember">
+            <input type="checkbox" /> Remember Me
+          </label>
+          <a href="#">Forgot Password?</a>
+        </div>
+        
+        <button type="submit"><i class="fa-solid fa-sign-in-alt"></i> Login</button>
+
+        <div class="social-login">
+          <button type="button" class="google"><i class="fab fa-google"></i> Continue with Google</button>
+          <button type="button" class="facebook"><i class="fab fa-facebook-f"></i> Continue with Facebook</button>
+        </div>
+      </form>
+    `;
+            } else if (type === "signup") {
+                formContainer.innerHTML = `
+      <form class="form-box">
+        <h2><i class="fa-solid fa-user-plus"></i> Sign Up</h2>
+        <p>Create your account to get started</p>
+
+        <div class="input-group">
+          <i class="fa-solid fa-user"></i>
+          <input type="text" placeholder="Full Name" required />
+        </div>
+        <div class="input-group">
+          <i class="fa-solid fa-envelope"></i>
+          <input type="email" placeholder="Email" required />
+        </div>
+        <div class="input-group">
+          <i class="fa-solid fa-phone"></i>
+          <input type="number" placeholder="Phone" required />
+        </div>
+        <div class="input-group">
+          <i class="fa-solid fa-location-dot"></i>
+          <input type="text" placeholder="Address" required />
+        </div>
+        <div class="input-group">
+          <i class="fa-solid fa-lock"></i>
+          <input type="password" placeholder="Password" required />
+        </div>
+
+        <button type="submit"><i class="fa-solid fa-user-check"></i> Sign Up</button>
+
+        <div class="social-login">
+          <button type="button" class="google"><i class="fab fa-google"></i> Sign Up with Google</button>
+          <button type="button" class="facebook"><i class="fab fa-facebook-f"></i> Sign Up with Facebook</button>
+        </div>
+      </form>
+    `;
+            }
+
+            modal.style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("modal").style.display = "none";
+        }
+
+        function closeModal() {
+            const modal = document.getElementById("modal");
+            modal.style.display = "none";
+        }
+
+        window.addEventListener("click", (event) => {
+            const modal = document.getElementById("modal");
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+
+        function showMenu(event) {
+            const popup = document.getElementById("popupMenu");
+            popup.style.display = "flex";
+        }
+
+        function hideMenu() {
+            const popup = document.getElementById("popupMenu");
+            popup.style.display = "none";
+        }
+
+        window.addEventListener("click", (event) => {
+            const PopUpMenu = document.getElementById("popupMenu");
+            if (!PopUpMenu.contains(event.target) && !event.target.closest('.regiicon') && !event.target.closest('.cancel')) {
+                PopUpMenu.style.display = "none";
+            }
+        });
+    </script>
+</body>
+
+</html>
